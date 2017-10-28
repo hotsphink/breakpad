@@ -123,6 +123,7 @@ endif
 check_LIBRARIES =
 noinst_LIBRARIES =
 lib_LIBRARIES =
+lib_LTLIBRARIES =
 bin_PROGRAMS =
 check_PROGRAMS =
 EXTRA_PROGRAMS =
@@ -343,6 +344,13 @@ bin_PROGRAMS += \
 	src/processor/minidump_dump \
 	src/processor/minidump_stackwalk
 endif !DISABLE_PROCESSOR
+
+lib_LTLIBRARIES += \
+        src/client/linux/libinjector.la
+src_client_linux_libinjector_la_SOURCES = \
+        src/client/linux/injector.cpp
+src_client_linux_libinjector_la_LIBADD = \
+        src/client/linux/libbreakpad_client.a
 
 if LINUX_HOST
 EXTRA_PROGRAMS += \
