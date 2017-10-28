@@ -47,7 +47,8 @@ AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_CPP
 AC_PROG_CXX
-AC_PROG_RANLIB
+
+LT_INIT
 
 dnl This must come before all the feature tests below.
 AC_ARG_ENABLE(m32,
