@@ -47,6 +47,7 @@
 
 
 
+
 VPATH = @srcdir@
 am__is_gnu_make = { \
   if test -z '$(MAKELEVEL)'; then \
@@ -275,13 +276,13 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
-	"$(DESTDIR)$(docdir)" "$(DESTDIR)$(pkgconfigdir)" \
-	"$(DESTDIR)$(includecdir)" "$(DESTDIR)$(includecldir)" \
-	"$(DESTDIR)$(includeclcdir)" "$(DESTDIR)$(includecldwcdir)" \
-	"$(DESTDIR)$(includeclhdir)" "$(DESTDIR)$(includeclmdir)" \
-	"$(DESTDIR)$(includegbcdir)" "$(DESTDIR)$(includelssdir)" \
-	"$(DESTDIR)$(includepdir)"
+am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libdir)" \
+	"$(DESTDIR)$(bindir)" "$(DESTDIR)$(docdir)" \
+	"$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includecdir)" \
+	"$(DESTDIR)$(includecldir)" "$(DESTDIR)$(includeclcdir)" \
+	"$(DESTDIR)$(includecldwcdir)" "$(DESTDIR)$(includeclhdir)" \
+	"$(DESTDIR)$(includeclmdir)" "$(DESTDIR)$(includegbcdir)" \
+	"$(DESTDIR)$(includelssdir)" "$(DESTDIR)$(includepdir)"
 LIBRARIES = $(lib_LIBRARIES) $(noinst_LIBRARIES)
 ARFLAGS = cru
 AM_V_AR = $(am__v_AR_@AM_V@)
@@ -548,6 +549,17 @@ am__src_third_party_libdisasm_libdisasm_a_SOURCES_DIST =  \
 @DISABLE_PROCESSOR_FALSE@	src/third_party/libdisasm/x86_operand_list.$(OBJEXT)
 src_third_party_libdisasm_libdisasm_a_OBJECTS =  \
 	$(am_src_third_party_libdisasm_libdisasm_a_OBJECTS)
+LTLIBRARIES = $(lib_LTLIBRARIES)
+src_client_linux_libinjector_la_DEPENDENCIES =  \
+	src/client/linux/libbreakpad_client.a
+am_src_client_linux_libinjector_la_OBJECTS =  \
+	src/client/linux/injector.lo
+src_client_linux_libinjector_la_OBJECTS =  \
+	$(am_src_client_linux_libinjector_la_OBJECTS)
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 @LINUX_HOST_TRUE@am__EXEEXT_1 = src/client/linux/linux_dumper_unittest_helper$(EXEEXT) \
 @LINUX_HOST_TRUE@	src/client/linux/linux_client_unittest_shlib$(EXEEXT)
 @DISABLE_PROCESSOR_FALSE@am__EXEEXT_2 = src/processor/microdump_stackwalk$(EXEEXT) \
@@ -602,10 +614,6 @@ am__DEPENDENCIES_1 =
 @SYSTEM_TEST_LIBS_FALSE@am__DEPENDENCIES_2 = src/testing/libtesting.a
 @SYSTEM_TEST_LIBS_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1) \
 @SYSTEM_TEST_LIBS_TRUE@	$(am__DEPENDENCIES_1)
-AM_V_lt = $(am__v_lt_@AM_V@)
-am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
-am__v_lt_0 = --silent
-am__v_lt_1 = 
 src_client_linux_linux_client_unittest_LINK = $(LIBTOOL) $(AM_V_lt) \
 	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
 	$(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -1599,6 +1607,7 @@ SOURCES = $(src_client_linux_libbreakpad_client_a_SOURCES) \
 	$(src_libbreakpad_a_SOURCES) \
 	$(src_testing_libtesting_a_SOURCES) \
 	$(src_third_party_libdisasm_libdisasm_a_SOURCES) \
+	$(src_client_linux_libinjector_la_SOURCES) \
 	$(src_client_linux_linux_client_unittest_SOURCES) \
 	$(src_client_linux_linux_client_unittest_shlib_SOURCES) \
 	$(src_client_linux_linux_dumper_unittest_helper_SOURCES) \
@@ -1650,6 +1659,7 @@ DIST_SOURCES =  \
 	$(am__src_libbreakpad_a_SOURCES_DIST) \
 	$(am__src_testing_libtesting_a_SOURCES_DIST) \
 	$(am__src_third_party_libdisasm_libdisasm_a_SOURCES_DIST) \
+	$(src_client_linux_libinjector_la_SOURCES) \
 	$(src_client_linux_linux_client_unittest_SOURCES) \
 	$(am__src_client_linux_linux_client_unittest_shlib_SOURCES_DIST) \
 	$(am__src_client_linux_linux_dumper_unittest_helper_SOURCES_DIST) \
@@ -2137,6 +2147,7 @@ pkgconfig_DATA = $(am__append_5) $(am__append_8)
 check_LIBRARIES = src/testing/libtesting.a
 noinst_LIBRARIES = $(am__append_6)
 lib_LIBRARIES = $(am__append_4) $(am__append_7)
+lib_LTLIBRARIES = src/client/linux/libinjector.la
 CLEANFILES = $(am__append_12)
 @SYSTEM_TEST_LIBS_FALSE@src_testing_libtesting_a_SOURCES = \
 @SYSTEM_TEST_LIBS_FALSE@	src/breakpad_googletest_includes.h \
@@ -2325,6 +2336,12 @@ CLEANFILES = $(am__append_12)
 @DISABLE_PROCESSOR_FALSE@	src/third_party/libdisasm/x86_misc.c \
 @DISABLE_PROCESSOR_FALSE@	src/third_party/libdisasm/x86_operand_list.c \
 @DISABLE_PROCESSOR_FALSE@	src/third_party/libdisasm/x86_operand_list.h
+
+src_client_linux_libinjector_la_SOURCES = \
+        src/client/linux/injector.cpp
+
+src_client_linux_libinjector_la_LIBADD = \
+        src/client/linux/libbreakpad_client.a
 
 @DISABLE_PROCESSOR_FALSE@check_SCRIPTS = \
 @DISABLE_PROCESSOR_FALSE@	src/processor/microdump_stackwalk_test \
@@ -3467,7 +3484,7 @@ EXTRA_DIST = \
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .S .c .cc .lo .log .o .obj .test .test$(EXEEXT) .trs
+.SUFFIXES: .S .c .cc .cpp .lo .log .o .obj .test .test$(EXEEXT) .trs
 am--refresh: Makefile
 	@:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__configure_deps)
@@ -3887,6 +3904,49 @@ src/third_party/libdisasm/libdisasm.a: $(src_third_party_libdisasm_libdisasm_a_O
 	$(AM_V_at)-rm -f src/third_party/libdisasm/libdisasm.a
 	$(AM_V_AR)$(src_third_party_libdisasm_libdisasm_a_AR) src/third_party/libdisasm/libdisasm.a $(src_third_party_libdisasm_libdisasm_a_OBJECTS) $(src_third_party_libdisasm_libdisasm_a_LIBADD)
 	$(AM_V_at)$(RANLIB) src/third_party/libdisasm/libdisasm.a
+
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
+	list2=; for p in $$list; do \
+	  if test -f $$p; then \
+	    list2="$$list2 $$p"; \
+	  else :; fi; \
+	done; \
+	test -z "$$list2" || { \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(libdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(libdir)" || exit 1; \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(libdir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(libdir)"; \
+	}
+
+uninstall-libLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
+	for p in $$list; do \
+	  $(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$f"; \
+	done
+
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+	@list='$(lib_LTLIBRARIES)'; \
+	locs=`for p in $$list; do echo $$p; done | \
+	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
+	      sort -u`; \
+	test -z "$$locs" || { \
+	  echo rm -f $${locs}; \
+	  rm -f $${locs}; \
+	}
+src/client/linux/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) src/client/linux/$(DEPDIR)
+	@: > src/client/linux/$(DEPDIR)/$(am__dirstamp)
+src/client/linux/injector.lo: src/client/linux/$(am__dirstamp) \
+	src/client/linux/$(DEPDIR)/$(am__dirstamp)
+
+src/client/linux/libinjector.la: $(src_client_linux_libinjector_la_OBJECTS) $(src_client_linux_libinjector_la_DEPENDENCIES) $(EXTRA_src_client_linux_libinjector_la_DEPENDENCIES) src/client/linux/$(am__dirstamp)
+	$(AM_V_CXXLD)$(CXXLINK) -rpath $(libdir) $(src_client_linux_libinjector_la_OBJECTS) $(src_client_linux_libinjector_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
 	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
@@ -4782,6 +4842,8 @@ src/tools/mac/dump_syms/dump_syms_mac$(EXEEXT): $(src_tools_mac_dump_syms_dump_s
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f src/client/*.$(OBJEXT)
+	-rm -f src/client/linux/*.$(OBJEXT)
+	-rm -f src/client/linux/*.lo
 	-rm -f src/client/linux/crash_generation/*.$(OBJEXT)
 	-rm -f src/client/linux/dump_writer_common/*.$(OBJEXT)
 	-rm -f src/client/linux/handler/*.$(OBJEXT)
@@ -4809,6 +4871,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@src/client/$(DEPDIR)/minidump_file_writer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@src/client/linux/$(DEPDIR)/injector.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/client/linux/crash_generation/$(DEPDIR)/crash_generation_client.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/client/linux/crash_generation/$(DEPDIR)/crash_generation_server.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@src/client/linux/dump_writer_common/$(DEPDIR)/thread_info.Po@am__quote@
@@ -7717,6 +7780,30 @@ src/tools/mac/dump_syms/src_tools_mac_dump_syms_dump_syms_mac-dump_syms_tool.obj
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(src_tools_mac_dump_syms_dump_syms_mac_CXXFLAGS) $(CXXFLAGS) -c -o src/tools/mac/dump_syms/src_tools_mac_dump_syms_dump_syms_mac-dump_syms_tool.obj `if test -f 'src/tools/mac/dump_syms/dump_syms_tool.cc'; then $(CYGPATH_W) 'src/tools/mac/dump_syms/dump_syms_tool.cc'; else $(CYGPATH_W) '$(srcdir)/src/tools/mac/dump_syms/dump_syms_tool.cc'; fi`
 
+.cpp.o:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
+
+.cpp.obj:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.cpp.lo:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
+
 mostlyclean-libtool:
 	-rm -f *.lo
 
@@ -8630,10 +8717,12 @@ check-am: all-am
 	  $(check_SCRIPTS)
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: check-am
-all-am: Makefile $(LIBRARIES) $(PROGRAMS) $(SCRIPTS) $(DATA) \
-		$(HEADERS)
+all-am: Makefile $(LIBRARIES) $(LTLIBRARIES) $(PROGRAMS) $(SCRIPTS) \
+		$(DATA) $(HEADERS)
+install-binPROGRAMS: install-libLTLIBRARIES
+
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(docdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includecdir)" "$(DESTDIR)$(includecldir)" "$(DESTDIR)$(includeclcdir)" "$(DESTDIR)$(includecldwcdir)" "$(DESTDIR)$(includeclhdir)" "$(DESTDIR)$(includeclmdir)" "$(DESTDIR)$(includegbcdir)" "$(DESTDIR)$(includelssdir)" "$(DESTDIR)$(includepdir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(docdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includecdir)" "$(DESTDIR)$(includecldir)" "$(DESTDIR)$(includeclcdir)" "$(DESTDIR)$(includecldwcdir)" "$(DESTDIR)$(includeclhdir)" "$(DESTDIR)$(includeclmdir)" "$(DESTDIR)$(includegbcdir)" "$(DESTDIR)$(includelssdir)" "$(DESTDIR)$(includepdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -8669,6 +8758,7 @@ distclean-generic:
 	-rm -f src/$(am__dirstamp)
 	-rm -f src/client/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/client/$(am__dirstamp)
+	-rm -f src/client/linux/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/client/linux/$(am__dirstamp)
 	-rm -f src/client/linux/crash_generation/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/client/linux/crash_generation/$(am__dirstamp)
@@ -8722,12 +8812,13 @@ maintainer-clean-generic:
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-checkLIBRARIES clean-checkPROGRAMS \
-	clean-generic clean-libLIBRARIES clean-libtool \
-	clean-noinstLIBRARIES clean-noinstPROGRAMS mostlyclean-am
+	clean-generic clean-libLIBRARIES clean-libLTLIBRARIES \
+	clean-libtool clean-noinstLIBRARIES clean-noinstPROGRAMS \
+	mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-	-rm -rf src/client/$(DEPDIR) src/client/linux/crash_generation/$(DEPDIR) src/client/linux/dump_writer_common/$(DEPDIR) src/client/linux/handler/$(DEPDIR) src/client/linux/log/$(DEPDIR) src/client/linux/microdump_writer/$(DEPDIR) src/client/linux/minidump_writer/$(DEPDIR) src/common/$(DEPDIR) src/common/android/$(DEPDIR) src/common/dwarf/$(DEPDIR) src/common/linux/$(DEPDIR) src/common/linux/tests/$(DEPDIR) src/common/mac/$(DEPDIR) src/common/tests/$(DEPDIR) src/processor/$(DEPDIR) src/testing/googlemock/src/$(DEPDIR) src/testing/googletest/src/$(DEPDIR) src/third_party/libdisasm/$(DEPDIR) src/tools/linux/core2md/$(DEPDIR) src/tools/linux/dump_syms/$(DEPDIR) src/tools/linux/md2core/$(DEPDIR) src/tools/linux/symupload/$(DEPDIR) src/tools/mac/dump_syms/$(DEPDIR)
+	-rm -rf src/client/$(DEPDIR) src/client/linux/$(DEPDIR) src/client/linux/crash_generation/$(DEPDIR) src/client/linux/dump_writer_common/$(DEPDIR) src/client/linux/handler/$(DEPDIR) src/client/linux/log/$(DEPDIR) src/client/linux/microdump_writer/$(DEPDIR) src/client/linux/minidump_writer/$(DEPDIR) src/common/$(DEPDIR) src/common/android/$(DEPDIR) src/common/dwarf/$(DEPDIR) src/common/linux/$(DEPDIR) src/common/linux/tests/$(DEPDIR) src/common/mac/$(DEPDIR) src/common/tests/$(DEPDIR) src/processor/$(DEPDIR) src/testing/googlemock/src/$(DEPDIR) src/testing/googletest/src/$(DEPDIR) src/third_party/libdisasm/$(DEPDIR) src/tools/linux/core2md/$(DEPDIR) src/tools/linux/dump_syms/$(DEPDIR) src/tools/linux/md2core/$(DEPDIR) src/tools/linux/symupload/$(DEPDIR) src/tools/mac/dump_syms/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -8755,7 +8846,8 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-binPROGRAMS install-libLIBRARIES
+install-exec-am: install-binPROGRAMS install-libLIBRARIES \
+	install-libLTLIBRARIES
 
 install-html: install-html-am
 
@@ -8780,7 +8872,7 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-	-rm -rf src/client/$(DEPDIR) src/client/linux/crash_generation/$(DEPDIR) src/client/linux/dump_writer_common/$(DEPDIR) src/client/linux/handler/$(DEPDIR) src/client/linux/log/$(DEPDIR) src/client/linux/microdump_writer/$(DEPDIR) src/client/linux/minidump_writer/$(DEPDIR) src/common/$(DEPDIR) src/common/android/$(DEPDIR) src/common/dwarf/$(DEPDIR) src/common/linux/$(DEPDIR) src/common/linux/tests/$(DEPDIR) src/common/mac/$(DEPDIR) src/common/tests/$(DEPDIR) src/processor/$(DEPDIR) src/testing/googlemock/src/$(DEPDIR) src/testing/googletest/src/$(DEPDIR) src/third_party/libdisasm/$(DEPDIR) src/tools/linux/core2md/$(DEPDIR) src/tools/linux/dump_syms/$(DEPDIR) src/tools/linux/md2core/$(DEPDIR) src/tools/linux/symupload/$(DEPDIR) src/tools/mac/dump_syms/$(DEPDIR)
+	-rm -rf src/client/$(DEPDIR) src/client/linux/$(DEPDIR) src/client/linux/crash_generation/$(DEPDIR) src/client/linux/dump_writer_common/$(DEPDIR) src/client/linux/handler/$(DEPDIR) src/client/linux/log/$(DEPDIR) src/client/linux/microdump_writer/$(DEPDIR) src/client/linux/minidump_writer/$(DEPDIR) src/common/$(DEPDIR) src/common/android/$(DEPDIR) src/common/dwarf/$(DEPDIR) src/common/linux/$(DEPDIR) src/common/linux/tests/$(DEPDIR) src/common/mac/$(DEPDIR) src/common/tests/$(DEPDIR) src/processor/$(DEPDIR) src/testing/googlemock/src/$(DEPDIR) src/testing/googletest/src/$(DEPDIR) src/third_party/libdisasm/$(DEPDIR) src/tools/linux/core2md/$(DEPDIR) src/tools/linux/dump_syms/$(DEPDIR) src/tools/linux/md2core/$(DEPDIR) src/tools/linux/symupload/$(DEPDIR) src/tools/mac/dump_syms/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -8803,31 +8895,32 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_docDATA \
 	uninstall-includeclhHEADERS uninstall-includeclmHEADERS \
 	uninstall-includegbcHEADERS uninstall-includelssHEADERS \
 	uninstall-includepHEADERS uninstall-libLIBRARIES \
-	uninstall-pkgconfigDATA
+	uninstall-libLTLIBRARIES uninstall-pkgconfigDATA
 
 .MAKE: check-am install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am am--refresh check check-TESTS \
 	check-am clean clean-binPROGRAMS clean-checkLIBRARIES \
 	clean-checkPROGRAMS clean-cscope clean-generic \
-	clean-libLIBRARIES clean-libtool clean-noinstLIBRARIES \
-	clean-noinstPROGRAMS cscope cscopelist-am ctags ctags-am dist \
-	dist-all dist-bzip2 dist-gzip dist-lzip dist-shar dist-tarZ \
-	dist-xz dist-zip distcheck distclean distclean-compile \
-	distclean-generic distclean-hdr distclean-libtool \
-	distclean-tags distcleancheck distdir distuninstallcheck dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am \
-	install-dist_docDATA install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am \
-	install-includecHEADERS install-includeclHEADERS \
-	install-includeclcHEADERS install-includecldwcHEADERS \
-	install-includeclhHEADERS install-includeclmHEADERS \
-	install-includegbcHEADERS install-includelssHEADERS \
-	install-includepHEADERS install-info install-info-am \
-	install-libLIBRARIES install-man install-pdf install-pdf-am \
-	install-pkgconfigDATA install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
+	clean-libLIBRARIES clean-libLTLIBRARIES clean-libtool \
+	clean-noinstLIBRARIES clean-noinstPROGRAMS cscope \
+	cscopelist-am ctags ctags-am dist dist-all dist-bzip2 \
+	dist-gzip dist-lzip dist-shar dist-tarZ dist-xz dist-zip \
+	distcheck distclean distclean-compile distclean-generic \
+	distclean-hdr distclean-libtool distclean-tags distcleancheck \
+	distdir distuninstallcheck dvi dvi-am html html-am info \
+	info-am install install-am install-binPROGRAMS install-data \
+	install-data-am install-dist_docDATA install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-includecHEADERS \
+	install-includeclHEADERS install-includeclcHEADERS \
+	install-includecldwcHEADERS install-includeclhHEADERS \
+	install-includeclmHEADERS install-includegbcHEADERS \
+	install-includelssHEADERS install-includepHEADERS install-info \
+	install-info-am install-libLIBRARIES install-libLTLIBRARIES \
+	install-man install-pdf install-pdf-am install-pkgconfigDATA \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool mostlyclean-local pdf \
 	pdf-am ps ps-am recheck tags tags-am uninstall uninstall-am \
@@ -8837,7 +8930,7 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_docDATA \
 	uninstall-includeclhHEADERS uninstall-includeclmHEADERS \
 	uninstall-includegbcHEADERS uninstall-includelssHEADERS \
 	uninstall-includepHEADERS uninstall-libLIBRARIES \
-	uninstall-pkgconfigDATA
+	uninstall-libLTLIBRARIES uninstall-pkgconfigDATA
 
 .PRECIOUS: Makefile
 
