@@ -346,10 +346,10 @@ bin_PROGRAMS += \
 endif !DISABLE_PROCESSOR
 
 lib_LTLIBRARIES += \
-        src/client/linux/libinjector.la
-src_client_linux_libinjector_la_SOURCES = \
+        src/client/linux/libbreakpadinjector.la
+src_client_linux_libbreakpadinjector_la_SOURCES = \
         src/client/linux/injector.cpp
-src_client_linux_libinjector_la_LIBADD = \
+src_client_linux_libbreakpadinjector_la_LIBADD = \
         src/client/linux/libbreakpad_client.a
 
 if LINUX_HOST

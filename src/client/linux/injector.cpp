@@ -7,21 +7,12 @@
 using google_breakpad::ExceptionHandler;
 
 static ExceptionHandler* gExceptionHandler = nullptr;
-static bool gEnabled = true;
+
+bool gBreakpadInjectorEnabled = true;
 
 bool TestEnabled(void* /* context */)
 {
-    return gEnabled;
-}
-
-extern "C" {
-void EnableBreakpadExceptionHandler(bool enable);
-}
-
-void
-EnableBreakpadExceptionHandler(bool enable)
-{
-    gEnabled = enable;
+    return gBreakpadInjectorEnabled;
 }
 
 bool
@@ -58,7 +49,7 @@ SetBreakpadExceptionHandler()
     if (gExceptionHandler)
         abort();
 
-    if (!SetGlobalExceptionHandler(nullptr, nullptr))
+    if (!SetGlobalExceptionHandler(TestEnabled, nullptr))
         abort();
 
    if (!gExceptionHandler)
